@@ -1,2 +1,2 @@
 # viditguw.github.io
-Tommy G Capstone - Problem #1
+Tommy G AI in Business Capstone 
