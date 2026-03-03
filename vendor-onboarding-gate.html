@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Onboarding Gate</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #222222;
+      --border: #2e2e2e;
+      --border-active: #444;
+      --text: #e8e8e8;
+      --text-muted: #777;
+      --text-dim: #444;
+      --accent: #c8f135;
+      --accent-dim: rgba(200, 241, 53, 0.08);
+      --accent-glow: rgba(200, 241, 53, 0.15);
+      --denied: #ff4d4d;
+      --denied-dim: rgba(255, 77, 77, 0.08);
+      --analyst: #f5a623;
+      --analyst-dim: rgba(245, 166, 35, 0.08);
+      --error: #ff6b6b;
+      --error-dim: rgba(255, 107, 107, 0.08);
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,241,53,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,241,53,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 48px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .header-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    /* Rule legend */
+    .rules-legend {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+
+    .rules-legend-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .rules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .rule-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+    }
+
+    .rule-code {
+      color: var(--accent);
+      flex-shrink: 0;
+      min-width: 24px;
+    }
+
+    /* Form */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      animation: fadeDown 0.6s 0.2s ease both;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-of-type { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    label span.required {
+      color: var(--accent);
+      margin-left: 3px;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.4);
+      cursor: pointer;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* File upload */
+    .file-upload-wrapper {
+      position: relative;
+    }
+
+    .file-upload-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .file-upload-display {
+      background: var(--bg);
+      border: 1px dashed var(--border-active);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .file-upload-display:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .file-upload-display.has-file {
+      border-color: var(--accent);
+      border-style: solid;
+      background: var(--accent-dim);
+    }
+
+    .file-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .file-text {
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .file-name {
+      color: var(--accent);
+    }
+
+    .file-placeholder {
+      color: var(--text-dim);
+    }
+
+    /* Two col layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      margin-top: 28px;
+      background: var(--accent);
+      color: #0f0f0f;
+      border: none;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #d4f74a;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Result */
+    .result {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      animation: slideUp 0.4s ease both;
+      display: none;
+    }
+
+    .result.visible { display: block; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .result-header.denied {
+      background: var(--denied-dim);
+      border-bottom: 1px solid rgba(255,77,77,0.2);
+    }
+
+    .result-header.analyst {
+      background: var(--analyst-dim);
+      border-bottom: 1px solid rgba(245,166,35,0.2);
+    }
+
+    .result-header.validation-error {
+      background: var(--error-dim);
+      border-bottom: 1px solid rgba(255,107,107,0.2);
+    }
+
+    .result-status {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .result-status.denied { color: var(--denied); }
+    .result-status.analyst { color: var(--analyst); }
+    .result-status.validation-error { color: var(--error); }
+
+    .result-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .result-badge.denied { background: rgba(255,77,77,0.15); color: var(--denied); }
+    .result-badge.analyst { background: rgba(245,166,35,0.15); color: var(--analyst); }
+    .result-badge.validation-error { background: rgba(255,107,107,0.15); color: var(--error); }
+
+    .result-body {
+      padding: 20px 24px;
+      background: var(--surface2);
+    }
+
+    .result-rule {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      background: var(--bg);
+      border-left: 2px solid var(--border-active);
+    }
+
+    .result-rule strong {
+      color: var(--text);
+    }
+
+    .result-message-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .result-message {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
+    /* Error field highlight */
+    input.field-error {
+      border-color: var(--error) !important;
+    }
+
+    .field-error-msg {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 5px;
+    }
+
+    /* Reset */
+    .reset-btn {
+      margin-top: 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      width: 100%;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      animation: fadeDown 0.6s 0.4s ease both;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="header">
+      <div class="header-tag">Cybersecurity Risk Team</div>
+      <h1>Vendor Onboarding Gate</h1>
+      <p class="header-sub">Submit your compliance documents for automated screening. All decisions are produced by deterministic if-then rules.</p>
+    </header>
+
+    <div class="rules-legend">
+      <div class="rules-legend-title">Rule Engine — Active Rules</div>
+      <div class="rules-list">
+        <div class="rule-item"><span class="rule-code">R1</span><span>ISO 27001 certificate expired before submission date → DENIED</span></div>
+        <div class="rule-item"><span class="rule-code">R2</span><span>SIG questionnaire older than 12 months → DENIED</span></div>
+        <div class="rule-item"><span class="rule-code">R3</span><span>All checks pass → SENT TO ANALYST (pending review)</span></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="section-label">// Vendor Information</div>
+
+      <div class="form-group">
+        <label>Vendor Name <span class="required">*</span></label>
+        <input type="text" id="vendorName" placeholder="e.g. Acme Corp" autocomplete="off"/>
+        <div class="field-error-msg" id="err-vendorName"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Form Submission Date <span class="required">*</span></label>
+        <input type="date" id="submissionDate"/>
+        <div class="field-error-msg" id="err-submissionDate"></div>
+      </div>
+
+      <hr class="divider"/>
+      <div class="section-label">// SIG Questionnaire</div>
+
+      <div class="two-col">
+        <div class="form-group">
+          <label>SIG Submission Date <span class="required">*</span></label>
+          <input type="date" id="sigDate"/>
+          <div class="field-error-msg" id="err-sigDate"></div>
+        </div>
+        <div class="form-group">
+          <label>Upload SIG File <span class="required">*</span></label>
+          <div class="file-upload-wrapper">
+            <input type="file" class="file-upload-input" id="sigFile" accept=".pdf,.doc,.docx,.xlsx,.xls"/>
+            <div class="file-upload-display" id="sigFileDisplay">
+              <span class="file-icon">📄</span>
+              <span class="file-text file-placeholder">Click to upload</span>
+            </div>
+          </div>
+          <div class="field-error-msg" id="err-sigFile"></div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+      <div class="section-label">// ISO 27001 Certificate</div>
+
+      <div class="two-col">
+        <div class="form-group">
+          <label>Certificate Expiry Date <span class="required">*</span></label>
+          <input type="date" id="isoExpiry"/>
+          <div class="field-error-msg" id="err-isoExpiry"></div>
+        </div>
+        <div class="form-group">
+          <label>Upload ISO Certificate <span class="required">*</span></label>
+          <div class="file-upload-wrapper">
+            <input type="file" class="file-upload-input" id="isoFile" accept=".pdf,.doc,.docx,.jpg,.png"/>
+            <div class="file-upload-display" id="isoFileDisplay">
+              <span class="file-icon">📄</span>
+              <span class="file-text file-placeholder">Click to upload</span>
+            </div>
+          </div>
+          <div class="field-error-msg" id="err-isoFile"></div>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="runEvaluation()">
+        Submit for Evaluation →
+      </button>
+    </div>
+
+    <!-- Result -->
+    <div class="result" id="result">
+      <div class="result-header" id="resultHeader">
+        <span class="result-status" id="resultStatus"></span>
+        <span class="result-badge" id="resultBadge"></span>
+      </div>
+      <div class="result-body">
+        <div class="result-rule" id="resultRule"></div>
+        <div class="result-message-label">// Message to Vendor</div>
+        <div class="result-message" id="resultMessage"></div>
+      </div>
+      <div style="padding: 0 24px 20px; background: var(--surface2);">
+        <button class="reset-btn" onclick="resetForm()">← Submit Another Request</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span>Vendor Onboarding Gate v1.0</span>
+      <span>Rules-Based · Deterministic · External Workflow</span>
+    </footer>
+
+  </div>
+
+  <script>
+    // File upload display
+    document.getElementById('sigFile').addEventListener('change', function() {
+      updateFileDisplay('sigFile', 'sigFileDisplay');
+    });
+    document.getElementById('isoFile').addEventListener('change', function() {
+      updateFileDisplay('isoFile', 'isoFileDisplay');
+    });
+
+    function updateFileDisplay(inputId, displayId) {
+      const input = document.getElementById(inputId);
+      const display = document.getElementById(displayId);
+      if (input.files && input.files[0]) {
+        const name = input.files[0].name;
+        const short = name.length > 22 ? name.substring(0, 20) + '…' : name;
+        display.classList.add('has-file');
+        display.querySelector('.file-text').classList.remove('file-placeholder');
+        display.querySelector('.file-text').classList.add('file-name');
+        display.querySelector('.file-text').textContent = short;
+        display.querySelector('.file-icon').textContent = '✓';
+      }
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.field-error-msg').forEach(el => el.textContent = '');
+      document.querySelectorAll('input').forEach(el => el.classList.remove('field-error'));
+    }
+
+    function setError(fieldId, msg) {
+      const field = document.getElementById(fieldId);
+      if (field) field.classList.add('field-error');
+      const errEl = document.getElementById('err-' + fieldId);
+      if (errEl) errEl.textContent = msg;
+    }
+
+    function parseDate(str) {
+      if (!str) return null;
+      const d = new Date(str + 'T00:00:00');
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function diffDays(a, b) {
+      // Returns b - a in days
+      return Math.round((b - a) / (1000 * 60 * 60 * 24));
+    }
+
+    function diffMonths(a, b) {
+      // Returns approximate months between a and b
+      return (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth());
+    }
+
+    function showResult(type, ruleCode, ruleText, message) {
+      const result = document.getElementById('result');
+      const header = document.getElementById('resultHeader');
+      const status = document.getElementById('resultStatus');
+      const badge = document.getElementById('resultBadge');
+      const rule = document.getElementById('resultRule');
+      const msg = document.getElementById('resultMessage');
+
+      const labels = {
+        'denied': 'DENIED',
+        'analyst': 'SENT TO ANALYST',
+        'validation-error': 'VALIDATION ERROR'
+      };
+
+      header.className = 'result-header ' + type;
+      status.className = 'result-status ' + type;
+      status.textContent = labels[type];
+      badge.className = 'result-badge ' + type;
+      badge.textContent = ruleCode;
+      rule.innerHTML = '<strong>' + ruleCode + '</strong> — ' + ruleText;
+      msg.textContent = message;
+
+      result.className = 'result visible';
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function runEvaluation() {
+      clearErrors();
+
+      const vendorName = document.getElementById('vendorName').value.trim();
+      const submissionDateStr = document.getElementById('submissionDate').value;
+      const sigDateStr = document.getElementById('sigDate').value;
+      const sigFile = document.getElementById('sigFile').files[0];
+      const isoExpiryStr = document.getElementById('isoExpiry').value;
+      const isoFile = document.getElementById('isoFile').files[0];
+
+      // --- VALIDATION ---
+      let hasError = false;
+
+      if (!vendorName) {
+        setError('vendorName', 'Vendor name is required.');
+        hasError = true;
+      }
+
+      const submissionDate = parseDate(submissionDateStr);
+      if (!submissionDateStr) {
+        setError('submissionDate', 'Form submission date is required.');
+        hasError = true;
+      } else if (!submissionDate) {
+        setError('submissionDate', 'Invalid date format.');
+        hasError = true;
+      }
+
+      if (!sigFile) {
+        setError('sigFile', 'SIG questionnaire file is required.');
+        hasError = true;
+      }
+
+      const sigDate = parseDate(sigDateStr);
+      if (!sigDateStr) {
+        setError('sigDate', 'SIG submission date is required.');
+        hasError = true;
+      } else if (!sigDate) {
+        setError('sigDate', 'Invalid date format.');
+        hasError = true;
+      }
+
+      if (!isoFile) {
+        setError('isoFile', 'ISO 27001 certificate file is required.');
+        hasError = true;
+      }
+
+      const isoExpiry = parseDate(isoExpiryStr);
+      if (!isoExpiryStr) {
+        setError('isoExpiry', 'ISO 27001 expiry date is required.');
+        hasError = true;
+      } else if (!isoExpiry) {
+        setError('isoExpiry', 'Invalid date format.');
+        hasError = true;
+      }
+
+      // Cross-field validation
+      if (submissionDate && sigDate && sigDate > submissionDate) {
+        setError('sigDate', 'SIG submission date cannot be after the form submission date.');
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // --- RULES ENGINE ---
+
+      // R1: ISO expired before submission date
+      if (isoExpiry < submissionDate) {
+        showResult(
+          'denied',
+          'R1',
+          'ISO 27001 certificate was already expired at time of submission.',
+          `Dear ${vendorName},\n\nYour vendor onboarding request has been denied. Your ISO 27001 certificate expired on ${isoExpiryStr}, which is before your submission date of ${submissionDateStr}, meaning your certification was not valid at the time of submission.\n\nTo proceed, please resubmit with a current ISO 27001 certificate that is valid as of your submission date.\n\nRegards,\nVendor Onboarding Team`
+        );
+        return;
+      }
+
+      // R2: SIG older than 12 months
+      const sigAgeMonths = diffMonths(sigDate, submissionDate);
+      if (sigAgeMonths > 12) {
+        showResult(
+          'denied',
+          'R2',
+          'SIG questionnaire is more than 12 months old and does not meet submission requirements.',
+          `Dear ${vendorName},\n\nYour vendor onboarding request has been denied. Your SIG questionnaire was completed on ${sigDateStr}, which is more than 12 months before your submission date of ${submissionDateStr}, meaning it no longer meets our recency requirements.\n\nTo proceed, please resubmit with a SIG questionnaire completed within the last 12 months.\n\nRegards,\nVendor Onboarding Team`
+        );
+        return;
+      }
+
+      // R3: Default — all checks pass, send to analyst
+      showResult(
+        'analyst',
+        'R3',
+        'All documents submitted. No disqualifying issues detected. Pending analyst review.',
+        `Dear ${vendorName},\n\nThank you for submitting your onboarding request. Your submission has been received and all required documents are in order. Our risk team will now conduct a full review of your submission.\n\nA member of our team will be in touch shortly with next steps.\n\nRegards,\nVendor Onboarding Team`
+      );
+    }
+
+    function resetForm() {
+      document.getElementById('vendorName').value = '';
+      document.getElementById('submissionDate').value = '';
+      document.getElementById('sigDate').value = '';
+      document.getElementById('sigFile').value = '';
+      document.getElementById('isoExpiry').value = '';
+      document.getElementById('isoFile').value = '';
+
+      ['sigFileDisplay', 'isoFileDisplay'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('has-file');
+        el.querySelector('.file-text').className = 'file-text file-placeholder';
+        el.querySelector('.file-text').textContent = 'Click to upload';
+        el.querySelector('.file-icon').textContent = '📄';
+      });
+
+      clearErrors();
+      const result = document.getElementById('result');
+      result.className = 'result';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
