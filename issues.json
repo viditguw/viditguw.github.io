@@ -1,48 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-004",
-      "vendor_name": "SupplyLink Global",
-      "vendor_email": "risk@supplylinkglobal.com",
-      "control_id": "VUL-005",
-      "issue_description": "Vendor has not provided evidence of a formal vulnerability management program including regular scanning and patch cadence within 30 days of critical CVE disclosure.",
-      "severity": "Medium",
-      "date_opened": "2026-02-22",
-      "sla_deadline": "2026-03-08",
-      "status": "Under Review",
-      "evidence_criteria": "Most recent vulnerability scan report (dated within 60 days) from an approved scanning tool showing critical and high findings, plus documented evidence of patch completion within 30 days for critical CVEs.",
-      "agent_last_action": "Vendor reply received. Evidence under evaluation by agent.",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
-      "audit_trail": [
-        {
-          "timestamp": "2026-02-22T09:00:00Z",
-          "actor": "analyst",
-          "action": "Issue created — vulnerability management evidence requested."
-        },
-        {
-          "timestamp": "2026-02-22T09:10:00Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to risk@supplylinkglobal.com."
-        },
-        {
-          "timestamp": "2026-02-25T16:44:00Z",
-          "actor": "agent",
-          "action": "Vendor reply received. Evidence extracted: 1 PDF scan report, 1 PNG patch log screenshot."
-        },
-        {
-          "timestamp": "2026-02-25T16:45:00Z",
-          "actor": "agent",
-          "action": "RAG lookup completed for VUL-005. Gemini evaluation in progress."
-        }
-      ]
-    },
-    {
       "issue_id": "ISS-005",
       "vendor_name": "CloudBase Systems",
       "vendor_email": "security@cloudbase.systems",
