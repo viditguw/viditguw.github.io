@@ -1,58 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-001",
-      "vendor_name": "Acme Cloud Solutions",
-      "vendor_email": "security@acmecloud.com",
-      "control_id": "IAM-001",
-      "issue_description": "Multi-factor authentication is not enforced on privileged administrator accounts, exposing critical systems to credential-based attacks.",
-      "severity": "High",
-      "date_opened": "2026-02-10",
-      "sla_deadline": "2026-02-24",
-      "status": "Escalated",
-      "evidence_criteria": "Screenshot of admin account settings panel showing MFA enforced for all accounts with administrative privileges, dated within the last 30 days.",
-      "agent_last_action": "Evidence evaluated — confidence too low to auto-close. Escalated to analyst.",
-      "agent_decision": "ESCALATE",
-      "relevance_score": 78,
-      "mapping_score": 61,
-      "sufficiency_score": 55,
-      "overall_confidence": "LOW",
-      "agent_reasoning": "Vendor submitted a policy document stating MFA is required, but did not provide a screenshot or config export demonstrating MFA is actively enforced on admin accounts.",
-      "missing": "Screenshot or configuration export showing MFA actively enforced on admin-privileged accounts.",
-      "audit_trail": [
-        {
-          "timestamp": "2026-02-10T08:30:00Z",
-          "actor": "analyst",
-          "action": "Issue created — MFA gap identified during quarterly audit."
-        },
-        {
-          "timestamp": "2026-02-10T08:40:00Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to security@acmecloud.com."
-        },
-        {
-          "timestamp": "2026-02-13T14:22:00Z",
-          "actor": "agent",
-          "action": "Vendor reply received. Evidence extracted: 1 PDF attachment."
-        },
-        {
-          "timestamp": "2026-02-13T14:23:00Z",
-          "actor": "agent",
-          "action": "RAG lookup completed for IAM-001. Gemini evaluation initiated."
-        },
-        {
-          "timestamp": "2026-02-13T14:24:00Z",
-          "actor": "agent",
-          "action": "Evaluation complete. Scores: relevance=78, mapping=61, sufficiency=55. Decision: ESCALATE."
-        },
-        {
-          "timestamp": "2026-02-13T14:25:00Z",
-          "actor": "agent",
-          "action": "Issue escalated to human analyst. Notification email sent."
-        }
-      ]
-    },
-    {
       "issue_id": "ISS-002",
       "vendor_name": "DataVault Inc.",
       "vendor_email": "compliance@datavault.io",
