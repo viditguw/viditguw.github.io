@@ -1,58 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-002",
-      "vendor_name": "DataVault Inc.",
-      "vendor_email": "compliance@datavault.io",
-      "control_id": "ENC-003",
-      "issue_description": "Encryption at rest is not confirmed for customer data stored in vendor cloud infrastructure. Vendor SIG questionnaire response was incomplete for section 7.3.",
-      "severity": "High",
-      "date_opened": "2026-02-15",
-      "sla_deadline": "2026-03-01",
-      "status": "Closed",
-      "evidence_criteria": "Configuration export or screenshot from cloud storage provider confirming AES-256 encryption at rest is enabled on all buckets holding customer data.",
-      "agent_last_action": "Evidence evaluated — all scores above threshold. Issue auto-closed.",
-      "agent_decision": "SUFFICIENT",
-      "relevance_score": 96,
-      "mapping_score": 92,
-      "sufficiency_score": 94,
-      "overall_confidence": "HIGH",
-      "agent_reasoning": "Vendor provided an AWS S3 console screenshot showing AES-256 encryption enabled on all three customer data buckets, dated February 2026.",
-      "missing": null,
-      "audit_trail": [
-        {
-          "timestamp": "2026-02-15T10:00:00Z",
-          "actor": "analyst",
-          "action": "Issue created — encryption gap flagged from incomplete SIG response section 7.3."
-        },
-        {
-          "timestamp": "2026-02-15T10:10:00Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to compliance@datavault.io."
-        },
-        {
-          "timestamp": "2026-02-18T09:15:00Z",
-          "actor": "agent",
-          "action": "Vendor reply received. Evidence extracted: 1 PNG screenshot attachment."
-        },
-        {
-          "timestamp": "2026-02-18T09:16:00Z",
-          "actor": "agent",
-          "action": "RAG lookup completed for ENC-003. Gemini evaluation initiated."
-        },
-        {
-          "timestamp": "2026-02-18T09:17:00Z",
-          "actor": "agent",
-          "action": "Evaluation complete. Scores: relevance=96, mapping=92, sufficiency=94. Decision: SUFFICIENT."
-        },
-        {
-          "timestamp": "2026-02-18T09:17:00Z",
-          "actor": "agent",
-          "action": "Issue closed. Vendor notified. Audit log sealed."
-        }
-      ]
-    },
-    {
       "issue_id": "ISS-003",
       "vendor_name": "NetSecure Ltd.",
       "vendor_email": "infosec@netsecure.co.uk",
