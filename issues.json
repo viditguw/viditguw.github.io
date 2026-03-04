@@ -1,31 +1,3 @@
 {
-  "issues": [
-    {
-      "issue_id": "ISS-006",
-      "vendor_name": "Meridian Analytics",
-      "vendor_email": "ciso@meridiananalytics.com",
-      "control_id": "ACC-006",
-      "issue_description": "Vendor access logs for systems handling client data are not being retained for the minimum required period of 12 months, creating a gap in forensic auditability.",
-      "severity": "High",
-      "date_opened": "2026-03-01",
-      "sla_deadline": "2026-03-15",
-      "status": "Open",
-      "evidence_criteria": "Screenshot of logging configuration showing retention policy set to minimum 12 months for all systems processing client data, or export from SIEM confirming retention settings.",
-      "agent_last_action": "Issue created. Pending next agent cycle to send remediation email.",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
-      "audit_trail": [
-        {
-          "timestamp": "2026-03-01T08:00:00Z",
-          "actor": "analyst",
-          "action": "Issue created — log retention gap identified during ISO 27001 gap assessment."
-        }
-      ]
-    }
-  ]
+  "issues": []
 }
