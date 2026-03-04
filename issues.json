@@ -9,7 +9,7 @@
       "severity": "High",
       "date_opened": "2026-03-04",
       "sla_deadline": "2026-03-18",
-      "status": "Open",
+      "status": "Escalated",
       "evidence_criteria": "ABCD",
       "agent_last_action": "Issue created. Pending next agent cycle.",
       "agent_decision": null,
@@ -24,6 +24,11 @@
           "timestamp": "2026-03-04T22:30:17.830Z",
           "actor": "analyst",
           "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        },
+        {
+          "timestamp": "2026-03-04T22:35:24.875Z",
+          "actor": "analyst",
+          "action": "Issue manually escalated via dashboard."
         }
       ]
     },
