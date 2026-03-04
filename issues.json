@@ -1,58 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-005",
-      "vendor_name": "CloudBase Systems",
-      "vendor_email": "security@cloudbase.systems",
-      "control_id": "BCM-004",
-      "issue_description": "No evidence provided that vendor maintains a tested business continuity plan covering their core services. Last BCP test date is unknown.",
-      "severity": "Low",
-      "date_opened": "2026-02-25",
-      "sla_deadline": "2026-03-11",
-      "status": "Awaiting Evidence",
-      "evidence_criteria": "Copy of current Business Continuity Plan plus evidence of a BCP test conducted within the last 12 months (test summary report, after-action review, or signed CISO attestation).",
-      "agent_last_action": "Insufficient evidence submitted. Follow-up email sent specifying missing items.",
-      "agent_decision": "INSUFFICIENT",
-      "relevance_score": 82,
-      "mapping_score": 44,
-      "sufficiency_score": 38,
-      "overall_confidence": "LOW",
-      "agent_reasoning": "Vendor submitted a BCP document but provided no evidence of a test having been conducted. The control requires both the plan and proof of testing.",
-      "missing": "Evidence of BCP test conducted within the last 12 months — test summary report, after-action review, or signed CISO attestation.",
-      "audit_trail": [
-        {
-          "timestamp": "2026-02-25T14:00:00Z",
-          "actor": "analyst",
-          "action": "Issue created — BCP evidence missing from vendor risk profile."
-        },
-        {
-          "timestamp": "2026-02-25T14:10:00Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to security@cloudbase.systems."
-        },
-        {
-          "timestamp": "2026-02-27T10:30:00Z",
-          "actor": "agent",
-          "action": "Vendor reply received. Evidence extracted: 1 PDF BCP document."
-        },
-        {
-          "timestamp": "2026-02-27T10:31:00Z",
-          "actor": "agent",
-          "action": "RAG lookup completed for BCM-004. Gemini evaluation initiated."
-        },
-        {
-          "timestamp": "2026-02-27T10:32:00Z",
-          "actor": "agent",
-          "action": "Evaluation complete. Scores: relevance=82, mapping=44, sufficiency=38. Decision: INSUFFICIENT."
-        },
-        {
-          "timestamp": "2026-02-27T10:33:00Z",
-          "actor": "agent",
-          "action": "Follow-up email sent specifying missing BCP test evidence."
-        }
-      ]
-    },
-    {
       "issue_id": "ISS-006",
       "vendor_name": "Meridian Analytics",
       "vendor_email": "ciso@meridiananalytics.com",
