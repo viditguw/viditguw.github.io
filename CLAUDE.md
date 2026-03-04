@@ -10,7 +10,7 @@ closes or escalates issues without human intervention.
 - `grc.html` — GitHub Pages dashboard for human analysts (read + write)
 - `issues.json` — Single source of truth for all issue state, shared between
   the dashboard and the Apps Script agent
-- `controls.json` — RAG knowledge base of control definitions (to be added)
+- `controls.json` — RAG knowledge base of control definitions 
 - `agent.gs` — Google Apps Script agent logic (to be added)
 
 ## The Agent Loop (Google Apps Script, runs every 10 seconds)
