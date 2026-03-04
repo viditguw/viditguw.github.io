@@ -1,38 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-003",
-      "vendor_name": "NetSecure Ltd.",
-      "vendor_email": "infosec@netsecure.co.uk",
-      "control_id": "NET-002",
-      "issue_description": "Vendor has not demonstrated that inbound access to production systems is restricted to approved IP ranges. Firewall rules were not included in the last security assessment.",
-      "severity": "Medium",
-      "date_opened": "2026-02-20",
-      "sla_deadline": "2026-03-06",
-      "status": "Awaiting Evidence",
-      "evidence_criteria": "Export of current firewall ruleset or screenshot of network security group settings showing only approved IP ranges permitted inbound on ports 22, 443, and 3389.",
-      "agent_last_action": "Remediation request email sent. Awaiting vendor response.",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
-      "audit_trail": [
-        {
-          "timestamp": "2026-02-20T11:00:00Z",
-          "actor": "analyst",
-          "action": "Issue created — firewall rules missing from security assessment."
-        },
-        {
-          "timestamp": "2026-02-20T11:10:00Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to infosec@netsecure.co.uk."
-        }
-      ]
-    },
-    {
       "issue_id": "ISS-004",
       "vendor_name": "SupplyLink Global",
       "vendor_email": "risk@supplylinkglobal.com",
