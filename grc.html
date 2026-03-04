@@ -134,6 +134,10 @@
   .toast.err{border-color:rgba(255,77,109,0.35);color:var(--high);}
   @keyframes toastIn{from{transform:translateY(10px);opacity:0;}to{transform:translateY(0);opacity:1;}}
   .no-issues{padding:40px;text-align:center;color:var(--text-muted);font-family:var(--mono);font-size:13px;}
+  .confirm-modal{width:420px;}
+  .confirm-body{padding:24px;color:var(--text-muted);font-size:13px;line-height:1.6;}
+  .confirm-body strong{color:var(--high);}
+  .confirm-id{font-family:var(--mono);color:var(--text);font-size:13px;margin-top:10px;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;}
 </style>
 </head>
 <body>
@@ -227,6 +231,20 @@
       <button class="btn" onclick="useReadOnly()">View Read-Only</button>
       <button class="btn btn-primary" id="pat-submit-btn" onclick="submitPAT()">Connect</button>
     </div>
+  </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal confirm-modal">
+    <div class="modal-header"><div class="modal-title" style="color:var(--high)">Delete Issue</div><button class="close-btn" onclick="closeDeleteModal()">✕</button></div>
+    <div class="confirm-body">
+      <strong>This action is permanent and cannot be undone.</strong> The issue will be removed from
+      <code style="font-family:var(--mono);color:var(--accent)">issues.json</code> and will no longer
+      be processed by the agent.
+      <div class="confirm-id" id="delete-modal-label"></div>
+    </div>
+    <div class="modal-footer"><button class="btn" onclick="closeDeleteModal()">Cancel</button><button class="btn btn-danger" onclick="confirmDelete()">Delete Issue</button></div>
   </div>
 </div>
 
@@ -514,6 +532,7 @@ function renderList() {
       <div class="row-actions" onclick="event.stopPropagation()">
         ${!readOnly&&i.status!=='Closed'&&i.status!=='Escalated'?`<button class="btn btn-sm btn-danger" onclick="escalateIssue('${i.issue_id}')">Escalate</button>`:''}
         ${!readOnly&&i.status==='Escalated'?`<button class="btn btn-sm btn-success" onclick="closeIssue('${i.issue_id}')">Close</button>`:''}
+        ${!readOnly?`<button class="btn btn-sm btn-danger" onclick="openDeleteModal('${i.issue_id}')" title="Delete issue">🗑</button>`:''}
       </div>
     </div>`).join('');
 }
@@ -549,6 +568,7 @@ function selectIssue(id) {
     if(i.status!=='Closed')c.push(`<button class="btn btn-success btn-sm" onclick="closeIssue('${i.issue_id}')">✓ Mark Closed</button>`);
     if(i.status!=='Escalated'&&i.status!=='Closed')c.push(`<button class="btn btn-danger btn-sm" onclick="escalateIssue('${i.issue_id}')">⚡ Escalate</button>`);
     if(i.status==='Closed')c.push(`<button class="btn btn-sm" onclick="reopenIssue('${i.issue_id}')">↩ Reopen</button>`);
+    c.push(`<button class="btn btn-sm btn-danger" onclick="openDeleteModal('${i.issue_id}')">🗑 Delete</button>`);
   }
   c.push(`<button class="btn btn-sm" style="margin-left:auto" onclick="closeDetail()">Close</button>`);
   document.getElementById('detail-controls').innerHTML=c.join('');
@@ -590,6 +610,36 @@ function reopenIssue(id) {
     i.audit_trail.push({ timestamp: new Date().toISOString(), actor: 'analyst',
       action: 'Issue reopened. Returned to Open for agent re-processing.' });
   }, 'Issue reopened.');
+}
+
+// ── Delete issue ──────────────────────────────────────────────────────────────
+let pendingDeleteId = null;
+
+function openDeleteModal(id) {
+  if (readOnly) { showToast('Read-only mode — enter a PAT to make changes.', true); return; }
+  const issue = issues.find(x => x.issue_id === id);
+  if (!issue) return;
+  pendingDeleteId = id;
+  document.getElementById('delete-modal-label').textContent =
+    `${issue.issue_id} · ${issue.vendor_name} · ${issue.issue_description.slice(0, 60)}${issue.issue_description.length > 60 ? '…' : ''}`;
+  document.getElementById('delete-modal').classList.add('open');
+}
+function closeDeleteModal() {
+  document.getElementById('delete-modal').classList.remove('open');
+  pendingDeleteId = null;
+}
+
+async function confirmDelete() {
+  const id = pendingDeleteId;
+  closeDeleteModal();
+  if (!id) return;
+  if (readOnly) { showToast('Read-only mode — enter a PAT to make changes.', true); return; }
+  const snapshot = JSON.parse(JSON.stringify(issues));
+  issues = issues.filter(x => x.issue_id !== id);
+  if (selectedIssueId === id) closeDetail();
+  showToast(`${id} deleted.`);
+  render();
+  await saveIssues(snapshot);
 }
 
 // ── Create issue ──────────────────────────────────────────────────────────────
