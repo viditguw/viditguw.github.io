@@ -285,7 +285,7 @@ const POLL_MS    = 5_000;  // dashboard polls GitHub every 5s to reflect agent u
 // ── Apps Script Web App URL ───────────────────────────────────────────────────
 // After deploying agent.gs as a Web App (Execute as: Me, Access: Anyone),
 // paste the URL here. The Run Agent button calls this to start the 5.5-min loop.
-const AGENT_URL  = 'https://script.google.com/macros/s/AKfycbzrgoLtUaiJ0eVaeYYI3gSWn6yWx0HK1FIx4qWjg_2z2wS5Z5mhA8Mx2_7zJbgCKb8L/exec';
+const AGENT_URL  = 'https://script.google.com/macros/s/AKfycbyvHgMMBULKAZpL1WrBcoMnAOVud2gmzUsUG_0xW54E-8DFK_6lO18dPXh8YWMKolYy/exec';
 
 // ── Runtime state ─────────────────────────────────────────────────────────────
 let issues          = [];
@@ -678,6 +678,7 @@ async function createIssue() {
     issue_id:nid,vendor_name:v,vendor_email:e,control_id:c,issue_description:d,severity:sv,
     date_opened:new Date().toISOString().split('T')[0],sla_deadline:sl,status:'Open',
     last_evaluated_message_id:null,
+    remediation_email_sent:false,
     agent_last_action:'Issue created. Pending next agent cycle.',
     agent_decision:null,relevance_score:null,mapping_score:null,sufficiency_score:null,
     overall_confidence:null,agent_reasoning:null,missing:null,
