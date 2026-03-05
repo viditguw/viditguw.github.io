@@ -12,14 +12,14 @@
       "status": "Awaiting Evidence",
       "last_evaluated_message_id": "19cbc3cc4bf742a4",
       "remediation_email_sent": true,
-      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence that the BitLocker protection is 'On' and the volume is 'Locked' or 'Protected' to ensure encryption is actively enforced.",
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence that BitLocker protection is 'On' and actively protecting the volume, not just encrypted.",
       "agent_decision": "INSUFFICIENT",
-      "relevance_score": 90,
+      "relevance_score": 95,
       "mapping_score": 40,
       "sufficiency_score": 40,
       "overall_confidence": "HIGH",
-      "agent_reasoning": "The evidence shows BitLocker is enabled and 100% encrypted, but the 'Protection Status' is 'Protection Off', indicating the volume is currently unlocked and not protected.",
-      "missing": "Evidence that the BitLocker protection is 'On' and the volume is 'Locked' or 'Protected' to ensure encryption is actively enforced.",
+      "agent_reasoning": "The evidence shows BitLocker is 100% encrypted but the 'Protection Status' is 'Protection Off', meaning the encryption is not actively protecting the data.",
+      "missing": "Evidence that BitLocker protection is 'On' and actively protecting the volume, not just encrypted.",
       "audit_trail": [
         {
           "timestamp": "2026-03-05T04:22:35.651Z",
@@ -32,17 +32,17 @@
           "action": "Remediation request email sent to viditg@uw.edu"
         },
         {
-          "timestamp": "2026-03-05T04:23:48.847Z",
+          "timestamp": "2026-03-05T04:23:51.928Z",
           "actor": "agent",
           "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
         },
         {
-          "timestamp": "2026-03-05T04:23:50.393Z",
+          "timestamp": "2026-03-05T04:23:54.197Z",
           "actor": "agent",
-          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that the BitLocker protection is 'On' and the volume is 'Locked' or 'Protected' to ensure encryption is actively enforced.. Scores: R=90, M=40, S=40"
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that BitLocker protection is 'On' and actively protecting the volume, not just encrypted.. Scores: R=95, M=40, S=40"
         },
         {
-          "timestamp": "2026-03-05T04:23:50.553Z",
+          "timestamp": "2026-03-05T04:23:54.343Z",
           "actor": "agent",
           "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
