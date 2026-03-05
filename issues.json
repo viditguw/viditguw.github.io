@@ -9,9 +9,9 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-19",
-      "status": "Open",
+      "status": "Awaiting Evidence",
       "evidence_criteria": "Submit screenshots highlighting server is encrypted",
-      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_last_action": "Remediation request email sent to vendor on 2026-03-05",
       "agent_decision": null,
       "relevance_score": null,
       "mapping_score": null,
@@ -24,6 +24,11 @@
           "timestamp": "2026-03-05T02:31:42.521Z",
           "actor": "analyst",
           "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        },
+        {
+          "timestamp": "2026-03-05T02:32:27.321Z",
+          "actor": "agent",
+          "action": "Remediation request email sent to viditg@uw.edu"
         }
       ]
     },
@@ -36,21 +41,36 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Awaiting Evidence",
+      "status": "Closed",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
-      "agent_last_action": "Job 4 test run at 2026-03-05T02:25:06.513Z",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
+      "agent_last_action": "Evidence evaluated and accepted. Issue closed automatically.",
+      "agent_decision": "SUFFICIENT",
+      "relevance_score": 100,
+      "mapping_score": 100,
+      "sufficiency_score": 100,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided system-generated terminal output showing BitLocker protection is actively 'On' and 100% encrypted for the OS volume, directly addressing the previous insufficiency.",
       "missing": null,
       "audit_trail": [
         {
           "timestamp": "2026-03-05T00:33:03.583Z",
           "actor": "analyst",
           "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        },
+        {
+          "timestamp": "2026-03-05T02:32:28.797Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-05T02:32:34.025Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: SUFFICIENT. Issue closed. Scores: R=100, M=100, S=100"
+        },
+        {
+          "timestamp": "2026-03-05T02:32:34.375Z",
+          "actor": "agent",
+          "action": "Closure notification email sent to viditg@uw.edu"
         }
       ]
     }
