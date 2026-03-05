@@ -56,9 +56,9 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Open",
+      "status": "Awaiting Evidence",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
-      "agent_last_action": "Evidence evaluated and accepted. Issue closed automatically.",
+      "agent_last_action": "Remediation request email sent to vendor on 2026-03-05",
       "agent_decision": "SUFFICIENT",
       "relevance_score": 95,
       "mapping_score": 95,
@@ -116,6 +116,11 @@
           "timestamp": "2026-03-05T02:39:28.451Z",
           "actor": "analyst",
           "action": "Issue reopened. Returned to Open for agent re-processing."
+        },
+        {
+          "timestamp": "2026-03-05T02:40:08.674Z",
+          "actor": "agent",
+          "action": "Remediation request email sent to viditg@uw.edu"
         }
       ]
     }
