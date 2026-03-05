@@ -734,8 +734,12 @@ function toggleAgent() {
   btn.disabled = true;
   setTimeout(() => { btn.disabled = false; }, 3000); // re-enable after 3s
 
-  fetch(AGENT_URL, { method: 'GET', mode: 'no-cors' })
-    .catch(() => {}); // no-cors always rejects the promise — that's expected
+  // Use keepalive:false and a timestamp param to prevent browser retries
+  fetch(AGENT_URL + '?t=' + Date.now(), {
+    method:    'GET',
+    mode:      'no-cors',
+    keepalive: false
+  }).catch(() => {}); // no-cors always rejects — expected
 
   agentRunning = true;
   dot.classList.add('running');
