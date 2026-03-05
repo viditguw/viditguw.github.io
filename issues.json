@@ -1,3 +1,31 @@
 {
-  "issues": []
+  "issues": [
+    {
+      "issue_id": "ISS-001",
+      "vendor_name": "University of Washington",
+      "vendor_email": "viditg@uw.edu",
+      "control_id": "ENC-002",
+      "issue_description": "Your production server is not encrypted at rest!",
+      "severity": "High",
+      "date_opened": "2026-03-05",
+      "sla_deadline": "2026-03-19",
+      "status": "Open",
+      "last_evaluated_message_id": null,
+      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_decision": null,
+      "relevance_score": null,
+      "mapping_score": null,
+      "sufficiency_score": null,
+      "overall_confidence": null,
+      "agent_reasoning": null,
+      "missing": null,
+      "audit_trail": [
+        {
+          "timestamp": "2026-03-05T04:05:43.515Z",
+          "actor": "analyst",
+          "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        }
+      ]
+    }
+  ]
 }
