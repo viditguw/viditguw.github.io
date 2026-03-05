@@ -56,15 +56,15 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Open",
+      "status": "Closed",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
       "agent_last_action": "Evidence evaluated and accepted. Issue closed automatically.",
       "agent_decision": "SUFFICIENT",
-      "relevance_score": 100,
-      "mapping_score": 100,
-      "sufficiency_score": 100,
+      "relevance_score": 95,
+      "mapping_score": 95,
+      "sufficiency_score": 95,
       "overall_confidence": "HIGH",
-      "agent_reasoning": "The vendor provided system-generated terminal output showing BitLocker protection is actively 'On' and 100% encrypted for the OS volume, directly addressing the previous insufficiency.",
+      "agent_reasoning": "The PowerShell output clearly shows BitLocker protection is 'On' and the C: drive is 100% encrypted with XTS-AES 128, directly addressing the previous remediation gap where protection was off.",
       "missing": null,
       "audit_trail": [
         {
@@ -91,6 +91,26 @@
           "timestamp": "2026-03-05T02:38:08.166Z",
           "actor": "analyst",
           "action": "Issue reopened. Returned to Open for agent re-processing."
+        },
+        {
+          "timestamp": "2026-03-05T02:38:29.562Z",
+          "actor": "agent",
+          "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-05T02:38:30.082Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-05T02:38:35.600Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: SUFFICIENT. Issue closed. Scores: R=95, M=95, S=95"
+        },
+        {
+          "timestamp": "2026-03-05T02:38:35.785Z",
+          "actor": "agent",
+          "action": "Closure notification email sent to viditg@uw.edu"
         }
       ]
     }
