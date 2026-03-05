@@ -1,54 +1,6 @@
 {
   "issues": [
     {
-      "issue_id": "ISS-002",
-      "vendor_name": "AWS",
-      "vendor_email": "viditg@uw.edu",
-      "control_id": "ENC-002",
-      "issue_description": "Your server is not encrypted",
-      "severity": "High",
-      "date_opened": "2026-03-05",
-      "sla_deadline": "2026-03-19",
-      "status": "Closed",
-      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result \u2014 manual review required.",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
-      "audit_trail": [
-        {
-          "timestamp": "2026-03-05T02:31:42.521Z",
-          "actor": "analyst",
-          "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
-        },
-        {
-          "timestamp": "2026-03-05T02:32:27.321Z",
-          "actor": "agent",
-          "action": "Remediation request email sent to viditg@uw.edu"
-        },
-        {
-          "timestamp": "2026-03-05T02:34:51.544Z",
-          "actor": "agent",
-          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
-        },
-        {
-          "timestamp": "2026-03-05T02:34:56.938Z",
-          "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
-        },
-        {
-          "timestamp": "2026-03-05T02:38:18.875Z",
-          "actor": "analyst",
-          "action": "Issue manually closed by analyst override."
-        }
-      ],
-      "last_evaluated_message_id": null,
-      "remediation_email_sent": true
-    },
-    {
       "issue_id": "ISS-001",
       "vendor_name": "Acme Corp",
       "vendor_email": "viditg@uw.edu",
@@ -130,7 +82,7 @@
         {
           "timestamp": "2026-03-05T02:41:41.059Z",
           "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
         },
         {
           "timestamp": "2026-03-05T02:43:21.110Z",
