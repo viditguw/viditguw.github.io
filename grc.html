@@ -285,7 +285,7 @@ const POLL_MS    = 5_000;  // dashboard polls GitHub every 5s to reflect agent u
 // ── Apps Script Web App URL ───────────────────────────────────────────────────
 // After deploying agent.gs as a Web App (Execute as: Me, Access: Anyone),
 // paste the URL here. The Run Agent button calls this to start the 5.5-min loop.
-const AGENT_URL  = 'https://script.google.com/macros/s/AKfycbyvHgMMBULKAZpL1WrBcoMnAOVud2gmzUsUG_0xW54E-8DFK_6lO18dPXh8YWMKolYy/exec';
+const AGENT_URL  = 'YOUR_WEB_APP_URL_HERE';
 
 // ── Runtime state ─────────────────────────────────────────────────────────────
 let issues          = [];
@@ -710,15 +710,16 @@ function toggleAgent() {
   const label = document.getElementById('agent-status-label');
 
   if (agentRunning) {
-    // Can't remotely kill the Apps Script loop — just update UI state
-    // The loop will naturally expire after 5.5 minutes
+    // Send stop signal — doGet checks Script Properties each cycle and exits
+    fetch(AGENT_URL + '?action=stop', { method: 'GET', mode: 'no-cors' })
+      .catch(() => {});
     agentRunning = false;
     dot.classList.remove('running');
     label.textContent     = 'Agent idle';
     btn.textContent       = '▶ Run Agent';
     btn.style.borderColor = 'var(--accent2)';
     btn.style.color       = 'var(--accent2)';
-    showToast('Agent marked idle. The server-side loop will expire on its own.');
+    showToast('Stop signal sent — agent will halt within 3 seconds.');
     return;
   }
 
@@ -728,6 +729,10 @@ function toggleAgent() {
     showToast('⚠ Set AGENT_URL in the script config before running the agent.', true);
     return;
   }
+
+  // Disable button immediately to prevent double-click firing two loops
+  btn.disabled = true;
+  setTimeout(() => { btn.disabled = false; }, 3000); // re-enable after 3s
 
   fetch(AGENT_URL, { method: 'GET', mode: 'no-cors' })
     .catch(() => {}); // no-cors always rejects the promise — that's expected
