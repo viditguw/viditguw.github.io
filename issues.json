@@ -9,9 +9,9 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-19",
-      "status": "Open",
+      "status": "Awaiting Evidence",
       "last_evaluated_message_id": null,
-      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_last_action": "Remediation request email sent to vendor on 2026-03-05",
       "agent_decision": null,
       "relevance_score": null,
       "mapping_score": null,
@@ -24,6 +24,11 @@
           "timestamp": "2026-03-05T03:52:51.284Z",
           "actor": "analyst",
           "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        },
+        {
+          "timestamp": "2026-03-05T03:52:53.789Z",
+          "actor": "agent",
+          "action": "Remediation request email sent to viditg@uw.edu"
         }
       ]
     },
