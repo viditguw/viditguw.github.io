@@ -10,8 +10,7 @@
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-19",
       "status": "Closed",
-      "evidence_criteria": "Submit screenshots highlighting server is encrypted",
-      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result — manual review required.",
+      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result \u2014 manual review required.",
       "agent_decision": null,
       "relevance_score": null,
       "mapping_score": null,
@@ -38,14 +37,15 @@
         {
           "timestamp": "2026-03-05T02:34:56.938Z",
           "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
         },
         {
           "timestamp": "2026-03-05T02:38:18.875Z",
           "actor": "analyst",
           "action": "Issue manually closed by analyst override."
         }
-      ]
+      ],
+      "last_evaluated_message_id": null
     },
     {
       "issue_id": "ISS-001",
@@ -57,7 +57,6 @@
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
       "status": "Closed",
-      "evidence_criteria": "Screenshots highlighting the control have been implemented",
       "agent_last_action": "Evidence evaluated and accepted. Issue closed automatically.",
       "agent_decision": "SUFFICIENT",
       "relevance_score": 95,
@@ -130,7 +129,7 @@
         {
           "timestamp": "2026-03-05T02:41:41.059Z",
           "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
         },
         {
           "timestamp": "2026-03-05T02:43:21.110Z",
@@ -177,7 +176,8 @@
           "actor": "agent",
           "action": "Closure notification email sent to viditg@uw.edu"
         }
-      ]
+      ],
+      "last_evaluated_message_id": null
     }
   ]
 }
