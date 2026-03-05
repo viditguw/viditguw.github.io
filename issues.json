@@ -9,7 +9,7 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Open",
+      "status": "Awaiting Evidence",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
       "agent_last_action": "Issue created. Pending next agent cycle.",
       "agent_decision": null,
