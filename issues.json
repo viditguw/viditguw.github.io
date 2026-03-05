@@ -56,9 +56,9 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Awaiting Evidence",
+      "status": "Escalated",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-05",
+      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result — manual review required.",
       "agent_decision": "SUFFICIENT",
       "relevance_score": 95,
       "mapping_score": 95,
@@ -121,6 +121,16 @@
           "timestamp": "2026-03-05T02:40:08.674Z",
           "actor": "agent",
           "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-05T02:41:35.744Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-05T02:41:41.059Z",
+          "actor": "agent",
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
         }
       ]
     }
