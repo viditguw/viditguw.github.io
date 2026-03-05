@@ -1,6 +1,33 @@
 {
   "issues": [
     {
+      "issue_id": "ISS-003",
+      "vendor_name": "University of Washington",
+      "vendor_email": "viditg@uw.edu",
+      "control_id": "ENC-002",
+      "issue_description": "Your production server is not encrypted at rest",
+      "severity": "High",
+      "date_opened": "2026-03-05",
+      "sla_deadline": "2026-03-19",
+      "status": "Open",
+      "last_evaluated_message_id": null,
+      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_decision": null,
+      "relevance_score": null,
+      "mapping_score": null,
+      "sufficiency_score": null,
+      "overall_confidence": null,
+      "agent_reasoning": null,
+      "missing": null,
+      "audit_trail": [
+        {
+          "timestamp": "2026-03-05T03:52:51.284Z",
+          "actor": "analyst",
+          "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        }
+      ]
+    },
+    {
       "issue_id": "ISS-002",
       "vendor_name": "AWS",
       "vendor_email": "viditg@uw.edu",
@@ -10,7 +37,7 @@
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-19",
       "status": "Closed",
-      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result \u2014 manual review required.",
+      "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result — manual review required.",
       "agent_decision": null,
       "relevance_score": null,
       "mapping_score": null,
@@ -37,7 +64,7 @@
         {
           "timestamp": "2026-03-05T02:34:56.938Z",
           "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
         },
         {
           "timestamp": "2026-03-05T02:38:18.875Z",
@@ -129,7 +156,7 @@
         {
           "timestamp": "2026-03-05T02:41:41.059Z",
           "actor": "agent",
-          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result \u2014 manual review required."
+          "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
         },
         {
           "timestamp": "2026-03-05T02:43:21.110Z",
