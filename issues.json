@@ -1,6 +1,33 @@
 {
   "issues": [
     {
+      "issue_id": "ISS-002",
+      "vendor_name": "AWS",
+      "vendor_email": "viditg@uw.edu",
+      "control_id": "ENC-002",
+      "issue_description": "Your server is not encrypted",
+      "severity": "High",
+      "date_opened": "2026-03-05",
+      "sla_deadline": "2026-03-19",
+      "status": "Open",
+      "evidence_criteria": "Submit screenshots highlighting server is encrypted",
+      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_decision": null,
+      "relevance_score": null,
+      "mapping_score": null,
+      "sufficiency_score": null,
+      "overall_confidence": null,
+      "agent_reasoning": null,
+      "missing": null,
+      "audit_trail": [
+        {
+          "timestamp": "2026-03-05T02:31:42.521Z",
+          "actor": "analyst",
+          "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        }
+      ]
+    },
+    {
       "issue_id": "ISS-001",
       "vendor_name": "Acme Corp",
       "vendor_email": "viditg@uw.edu",
