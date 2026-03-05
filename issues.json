@@ -9,7 +9,7 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-19",
-      "status": "Escalated",
+      "status": "Closed",
       "evidence_criteria": "Submit screenshots highlighting server is encrypted",
       "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result — manual review required.",
       "agent_decision": null,
@@ -39,6 +39,11 @@
           "timestamp": "2026-03-05T02:34:56.938Z",
           "actor": "agent",
           "action": "Issue escalated to human analyst. Reason: Gemini evaluation returned no result — manual review required."
+        },
+        {
+          "timestamp": "2026-03-05T02:38:18.875Z",
+          "actor": "analyst",
+          "action": "Issue manually closed by analyst override."
         }
       ]
     },
