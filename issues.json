@@ -56,7 +56,7 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Closed",
+      "status": "Open",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
       "agent_last_action": "Escalated to human analyst: Gemini evaluation returned no result — manual review required.",
       "agent_decision": "SUFFICIENT",
@@ -136,6 +136,11 @@
           "timestamp": "2026-03-05T02:43:21.110Z",
           "actor": "analyst",
           "action": "Issue manually closed by analyst override."
+        },
+        {
+          "timestamp": "2026-03-05T02:43:23.210Z",
+          "actor": "analyst",
+          "action": "Issue reopened. Returned to Open for agent re-processing."
         }
       ]
     }
