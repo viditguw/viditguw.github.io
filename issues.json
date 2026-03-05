@@ -17,7 +17,7 @@
       "mapping_score": 40,
       "sufficiency_score": 40,
       "overall_confidence": "HIGH",
-      "agent_reasoning": "The evidence shows BitLocker is 100% encrypted but the 'Protection Status' is 'Protection Off', indicating the encryption is not actively protecting the data.",
+      "agent_reasoning": "The evidence shows BitLocker is 100% encrypted but the 'Protection Status' is 'Protection Off', meaning the encryption is not actively protecting the data.",
       "missing": "Evidence that BitLocker protection is 'On' and actively protecting the volume, not just encrypted.",
       "audit_trail": [
         {
@@ -31,17 +31,17 @@
           "action": "Remediation request email sent to viditg@uw.edu"
         },
         {
-          "timestamp": "2026-03-05T04:06:29.069Z",
+          "timestamp": "2026-03-05T04:06:30.680Z",
           "actor": "agent",
           "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
         },
         {
-          "timestamp": "2026-03-05T04:06:30.730Z",
+          "timestamp": "2026-03-05T04:06:32.226Z",
           "actor": "agent",
           "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that BitLocker protection is 'On' and actively protecting the volume, not just encrypted.. Scores: R=95, M=40, S=40"
         },
         {
-          "timestamp": "2026-03-05T04:06:30.864Z",
+          "timestamp": "2026-03-05T04:06:32.365Z",
           "actor": "agent",
           "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
