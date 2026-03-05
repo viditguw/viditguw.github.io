@@ -25,7 +25,8 @@
   .logo-sub{font-family:var(--mono);font-size:11px;color:var(--text-muted);padding-left:20px;border-left:1px solid var(--border2);letter-spacing:0.08em;text-transform:uppercase;}
   .topbar-right{display:flex;align-items:center;gap:12px;}
   .agent-status{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;}
-  .agent-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:pulse 2s ease-in-out infinite;}
+  .agent-dot{width:7px;height:7px;border-radius:50%;background:var(--text-dim);transition:background 0.3s;}
+  .agent-dot.running{background:var(--accent2);animation:pulse 2s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,201,167,0.4);}50%{opacity:0.7;box-shadow:0 0 0 4px rgba(0,201,167,0);}}
   .sync-status{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text-muted);transition:border-color 0.2s,color 0.2s;}
   .sync-status.saving{border-color:var(--accent);color:var(--accent);}
@@ -148,7 +149,13 @@
     <div class="logo-sub">Third-Party Risk Console</div>
   </div>
   <div class="topbar-right">
-    <div class="agent-status"><div class="agent-dot"></div>Agent active · next cycle in <span id="countdown">09:42</span></div>
+    <div class="agent-status" id="agent-status-pill">
+      <div class="agent-dot" id="agent-dot"></div>
+      <span id="agent-status-label">Agent idle</span>
+    </div>
+    <button class="btn" id="btn-run-agent" onclick="toggleAgent()" style="border-color:var(--accent2);color:var(--accent2);">
+      ▶ Run Agent
+    </button>
     <!-- Live sync indicator -->
     <div class="sync-status" id="sync-status">
       <span class="sync-dot" id="sync-dot"></span>
@@ -257,7 +264,6 @@
       <div class="form-group"><label class="form-label">Vendor Security Email</label><input class="form-input" id="f-email" type="email" placeholder="security@vendor.com"></div>
       <div class="form-group"><label class="form-label">Control ID</label><input class="form-input" id="f-control" type="text" placeholder="e.g. IAM-001"></div>
       <div class="form-group"><label class="form-label">Issue Description</label><textarea class="form-textarea" id="f-desc" placeholder="Describe the specific control gap identified..."></textarea></div>
-      <div class="form-group"><label class="form-label">Evidence Criteria</label><textarea class="form-textarea" id="f-criteria" placeholder="Describe exactly what evidence the vendor must provide..."></textarea></div>
       <div class="form-group"><label class="form-label">Severity</label><select class="form-select" id="f-severity"><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select></div>
       <div class="form-group"><label class="form-label">SLA Deadline</label><input class="form-input" id="f-sla" type="date"></div>
     </div>
@@ -274,7 +280,16 @@ const GH_OWNER  = 'viditguw';
 const GH_REPO   = 'viditguw.github.io';
 const GH_BRANCH = 'main';
 const GH_PATH   = 'issues.json';
-const POLL_MS   = 30_000; // how often to check for agent updates (ms)
+const POLL_MS   = 15_000; // how often the dashboard polls for agent updates (ms)
+
+// ── GCP Cloud Scheduler config ────────────────────────────────────────────────
+// Fill these in after deploying your Cloud Scheduler job.
+// GCP_PROJECT:  your Google Cloud project ID (e.g. 'my-project-123456')
+// GCP_LOCATION: region where the job lives (e.g. 'us-central1')
+// GCP_JOB:      the Cloud Scheduler job name (e.g. 'vendorguard-agent')
+const GCP_PROJECT  = 'YOUR_PROJECT_ID';
+const GCP_LOCATION = 'us-central1';
+const GCP_JOB      = 'vendorguard-agent';
 
 // ── Runtime state ─────────────────────────────────────────────────────────────
 let issues          = [];
@@ -285,6 +300,8 @@ let ghFileSHA       = null;  // blob SHA of the last-read issues.json; required 
 let writeLock       = false; // prevents concurrent in-flight writes
 let readOnly        = false; // true when the analyst chose "View Read-Only"
 let pollTimer       = null;
+let agentRunning    = false; // tracks Cloud Scheduler job state
+let gcpAccessToken  = null;  // OAuth token for GCP API calls
 
 // ── PAT helpers ───────────────────────────────────────────────────────────────
 // The PAT lives ONLY in sessionStorage (auto-cleared when the tab closes).
@@ -552,7 +569,6 @@ function selectIssue(id) {
   document.getElementById('detail-body').innerHTML=`
     <div class="detail-section"><div class="detail-section-title">Issue Details</div>
       <div class="detail-field"><div class="detail-field-label">Description</div><div class="detail-field-value" style="line-height:1.6">${i.issue_description}</div></div>
-      <div class="detail-field"><div class="detail-field-label">Evidence Criteria</div><div class="detail-field-value" style="color:var(--text-muted);font-size:12px;line-height:1.6">${i.evidence_criteria}</div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
         <div class="detail-field"><div class="detail-field-label">Date Opened</div><div class="detail-field-value mono">${fDate(i.date_opened)}</div></div>
         <div class="detail-field"><div class="detail-field-label">SLA Deadline</div><div class="detail-field-value mono ${isOverdue(i.sla_deadline)&&i.status!=='Closed'?'overdue':''}">${fDate(i.sla_deadline)}</div></div>
@@ -659,15 +675,15 @@ function nextIssueId() {
 async function createIssue() {
   const v=document.getElementById('f-vendor').value.trim(),e=document.getElementById('f-email').value.trim(),
         c=document.getElementById('f-control').value.trim(),d=document.getElementById('f-desc').value.trim(),
-        cr=document.getElementById('f-criteria').value.trim(),sv=document.getElementById('f-severity').value,
-        sl=document.getElementById('f-sla').value;
-  if(!v||!e||!c||!d||!cr||!sl){showToast('Please fill in all fields.',true);return;}
+        sv=document.getElementById('f-severity').value,sl=document.getElementById('f-sla').value;
+  if(!v||!e||!c||!d||!sl){showToast('Please fill in all fields.',true);return;}
   const nid=nextIssueId();
   const snapshot=JSON.parse(JSON.stringify(issues));
   issues.unshift({
     issue_id:nid,vendor_name:v,vendor_email:e,control_id:c,issue_description:d,severity:sv,
     date_opened:new Date().toISOString().split('T')[0],sla_deadline:sl,status:'Open',
-    evidence_criteria:cr,agent_last_action:'Issue created. Pending next agent cycle.',
+    last_evaluated_message_id:null,
+    agent_last_action:'Issue created. Pending next agent cycle.',
     agent_decision:null,relevance_score:null,mapping_score:null,sufficiency_score:null,
     overall_confidence:null,agent_reasoning:null,missing:null,
     audit_trail:[{timestamp:new Date().toISOString(),actor:'analyst',
@@ -686,8 +702,85 @@ function showToast(msg,isErr){
   setTimeout(()=>t.remove(),4000);
 }
 
-let secs=582;
-setInterval(()=>{secs=(secs-1+600)%600;const m=String(Math.floor(secs/60)).padStart(2,'0');const s=String(secs%60).padStart(2,'0');document.getElementById('countdown').textContent=`${m}:${s}`;},1000);
+// ── GCP Cloud Scheduler toggle ───────────────────────────────────────────────
+// Uses the GCP REST API to pause/resume the Cloud Scheduler job.
+// Requires the user to authenticate via Google OAuth in the browser.
+// Access token is obtained once and cached for the session.
+
+async function getGCPToken() {
+  // Use Google Identity Services (GSI) tokenClient if available,
+  // otherwise prompt user to paste a token from gcloud CLI.
+  if (gcpAccessToken) return gcpAccessToken;
+
+  // Fallback: prompt user to paste a bearer token
+  // (obtained via: gcloud auth print-access-token)
+  const token = prompt(
+    'Paste your GCP access token to control the agent scheduler.\n\n' +
+    'Get it by running in your terminal:\n' +
+    '  gcloud auth print-access-token'
+  );
+  if (!token || !token.trim()) throw new Error('No GCP token provided');
+  gcpAccessToken = token.trim();
+  return gcpAccessToken;
+}
+
+async function toggleAgent() {
+  const btn   = document.getElementById('btn-run-agent');
+  const dot   = document.getElementById('agent-dot');
+  const label = document.getElementById('agent-status-label');
+
+  btn.disabled = true;
+
+  try {
+    const token  = await getGCPToken();
+    const action = agentRunning ? 'pause' : 'resume';
+    const url    = `https://cloudscheduler.googleapis.com/v1/projects/${GCP_PROJECT}/locations/${GCP_LOCATION}/jobs/${GCP_JOB}:${action}`;
+
+    const r = await fetch(url, {
+      method:  'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type':  'application/json'
+      }
+    });
+
+    if (r.status === 401) {
+      // Token expired — clear and retry next press
+      gcpAccessToken = null;
+      showToast('GCP token expired — please press Run Agent again to re-authenticate.', true);
+      btn.disabled = false;
+      return;
+    }
+
+    if (!r.ok) {
+      const body = await r.json().catch(() => ({}));
+      throw new Error(body.error?.message || `HTTP ${r.status}`);
+    }
+
+    agentRunning = !agentRunning;
+
+    if (agentRunning) {
+      dot.classList.add('running');
+      label.textContent = 'Agent running';
+      btn.textContent   = '⏹ Stop Agent';
+      btn.style.borderColor = 'var(--high)';
+      btn.style.color       = 'var(--high)';
+      showToast('Agent started — cycles every 3 seconds.');
+    } else {
+      dot.classList.remove('running');
+      label.textContent = 'Agent idle';
+      btn.textContent   = '▶ Run Agent';
+      btn.style.borderColor = 'var(--accent2)';
+      btn.style.color       = 'var(--accent2)';
+      showToast('Agent stopped.');
+    }
+
+  } catch(e) {
+    showToast('Agent toggle failed: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+}
 
 function render(){renderStats();renderList();}
 
