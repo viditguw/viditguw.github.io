@@ -279,17 +279,13 @@
 const GH_OWNER  = 'viditguw';
 const GH_REPO   = 'viditguw.github.io';
 const GH_BRANCH = 'main';
-const GH_PATH   = 'issues.json';
-const POLL_MS   = 15_000; // how often the dashboard polls for agent updates (ms)
+const GH_PATH    = 'issues.json';
+const POLL_MS    = 5_000;  // dashboard polls GitHub every 5s to reflect agent updates
 
-// ── GCP Cloud Scheduler config ────────────────────────────────────────────────
-// Fill these in after deploying your Cloud Scheduler job.
-// GCP_PROJECT:  your Google Cloud project ID (e.g. 'my-project-123456')
-// GCP_LOCATION: region where the job lives (e.g. 'us-central1')
-// GCP_JOB:      the Cloud Scheduler job name (e.g. 'vendorguard-agent')
-const GCP_PROJECT  = 'YOUR_PROJECT_ID';
-const GCP_LOCATION = 'us-central1';
-const GCP_JOB      = 'vendorguard-agent';
+// ── Apps Script Web App URL ───────────────────────────────────────────────────
+// After deploying agent.gs as a Web App (Execute as: Me, Access: Anyone),
+// paste the URL here. The Run Agent button calls this to start the 5.5-min loop.
+const AGENT_URL  = 'YOUR_WEB_APP_URL_HERE';
 
 // ── Runtime state ─────────────────────────────────────────────────────────────
 let issues          = [];
@@ -300,8 +296,7 @@ let ghFileSHA       = null;  // blob SHA of the last-read issues.json; required 
 let writeLock       = false; // prevents concurrent in-flight writes
 let readOnly        = false; // true when the analyst chose "View Read-Only"
 let pollTimer       = null;
-let agentRunning    = false; // tracks Cloud Scheduler job state
-let gcpAccessToken  = null;  // OAuth token for GCP API calls
+let agentRunning    = false; // true while the Web App loop is running
 
 // ── PAT helpers ───────────────────────────────────────────────────────────────
 // The PAT lives ONLY in sessionStorage (auto-cleared when the tab closes).
@@ -702,84 +697,59 @@ function showToast(msg,isErr){
   setTimeout(()=>t.remove(),4000);
 }
 
-// ── GCP Cloud Scheduler toggle ───────────────────────────────────────────────
-// Uses the GCP REST API to pause/resume the Cloud Scheduler job.
-// Requires the user to authenticate via Google OAuth in the browser.
-// Access token is obtained once and cached for the session.
+// ── Apps Script Web App toggle ───────────────────────────────────────────────
+// Calls the deployed Apps Script Web App URL (mode: no-cors).
+// The Web App runs mainLoop() every 3 seconds for 5.5 minutes then stops.
+// Press Run Agent again to restart a fresh loop.
+// The dashboard polls GitHub every 5s independently to show live updates.
 
-async function getGCPToken() {
-  // Use Google Identity Services (GSI) tokenClient if available,
-  // otherwise prompt user to paste a token from gcloud CLI.
-  if (gcpAccessToken) return gcpAccessToken;
-
-  // Fallback: prompt user to paste a bearer token
-  // (obtained via: gcloud auth print-access-token)
-  const token = prompt(
-    'Paste your GCP access token to control the agent scheduler.\n\n' +
-    'Get it by running in your terminal:\n' +
-    '  gcloud auth print-access-token'
-  );
-  if (!token || !token.trim()) throw new Error('No GCP token provided');
-  gcpAccessToken = token.trim();
-  return gcpAccessToken;
-}
-
-async function toggleAgent() {
+function toggleAgent() {
   const btn   = document.getElementById('btn-run-agent');
   const dot   = document.getElementById('agent-dot');
   const label = document.getElementById('agent-status-label');
 
-  btn.disabled = true;
-
-  try {
-    const token  = await getGCPToken();
-    const action = agentRunning ? 'pause' : 'resume';
-    const url    = `https://cloudscheduler.googleapis.com/v1/projects/${GCP_PROJECT}/locations/${GCP_LOCATION}/jobs/${GCP_JOB}:${action}`;
-
-    const r = await fetch(url, {
-      method:  'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type':  'application/json'
-      }
-    });
-
-    if (r.status === 401) {
-      // Token expired — clear and retry next press
-      gcpAccessToken = null;
-      showToast('GCP token expired — please press Run Agent again to re-authenticate.', true);
-      btn.disabled = false;
-      return;
-    }
-
-    if (!r.ok) {
-      const body = await r.json().catch(() => ({}));
-      throw new Error(body.error?.message || `HTTP ${r.status}`);
-    }
-
-    agentRunning = !agentRunning;
-
-    if (agentRunning) {
-      dot.classList.add('running');
-      label.textContent = 'Agent running';
-      btn.textContent   = '⏹ Stop Agent';
-      btn.style.borderColor = 'var(--high)';
-      btn.style.color       = 'var(--high)';
-      showToast('Agent started — cycles every 3 seconds.');
-    } else {
-      dot.classList.remove('running');
-      label.textContent = 'Agent idle';
-      btn.textContent   = '▶ Run Agent';
-      btn.style.borderColor = 'var(--accent2)';
-      btn.style.color       = 'var(--accent2)';
-      showToast('Agent stopped.');
-    }
-
-  } catch(e) {
-    showToast('Agent toggle failed: ' + e.message, true);
-  } finally {
-    btn.disabled = false;
+  if (agentRunning) {
+    // Can't remotely kill the Apps Script loop — just update UI state
+    // The loop will naturally expire after 5.5 minutes
+    agentRunning = false;
+    dot.classList.remove('running');
+    label.textContent     = 'Agent idle';
+    btn.textContent       = '▶ Run Agent';
+    btn.style.borderColor = 'var(--accent2)';
+    btn.style.color       = 'var(--accent2)';
+    showToast('Agent marked idle. The server-side loop will expire on its own.');
+    return;
   }
+
+  // Fire the Web App request — no-cors so we can't read the response,
+  // but the Apps Script loop runs fully on Google's servers regardless.
+  if (!AGENT_URL || AGENT_URL === 'YOUR_WEB_APP_URL_HERE') {
+    showToast('⚠ Set AGENT_URL in the script config before running the agent.', true);
+    return;
+  }
+
+  fetch(AGENT_URL, { method: 'GET', mode: 'no-cors' })
+    .catch(() => {}); // no-cors always rejects the promise — that's expected
+
+  agentRunning = true;
+  dot.classList.add('running');
+  label.textContent     = 'Agent running · ~5 min';
+  btn.textContent       = '⏹ Stop Agent';
+  btn.style.borderColor = 'var(--high)';
+  btn.style.color       = 'var(--high)';
+  showToast('Agent started — cycling every 3 seconds for 5.5 minutes.');
+
+  // Auto-reset button after 5.5 minutes to match server-side loop expiry
+  setTimeout(() => {
+    if (!agentRunning) return;
+    agentRunning = false;
+    dot.classList.remove('running');
+    label.textContent     = 'Agent idle';
+    btn.textContent       = '▶ Run Agent';
+    btn.style.borderColor = 'var(--accent2)';
+    btn.style.color       = 'var(--accent2)';
+    showToast('Agent loop expired — press Run Agent to restart.');
+  }, 330000); // 5.5 minutes
 }
 
 function render(){renderStats();renderList();}
