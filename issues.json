@@ -51,7 +51,7 @@
       "severity": "High",
       "date_opened": "2026-03-05",
       "sla_deadline": "2026-03-18",
-      "status": "Closed",
+      "status": "Open",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
       "agent_last_action": "Evidence evaluated and accepted. Issue closed automatically.",
       "agent_decision": "SUFFICIENT",
@@ -81,6 +81,11 @@
           "timestamp": "2026-03-05T02:32:34.375Z",
           "actor": "agent",
           "action": "Closure notification email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-05T02:38:08.166Z",
+          "actor": "analyst",
+          "action": "Issue reopened. Returned to Open for agent re-processing."
         }
       ]
     }
