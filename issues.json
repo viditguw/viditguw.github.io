@@ -58,14 +58,14 @@
       "sla_deadline": "2026-03-18",
       "status": "Awaiting Evidence",
       "evidence_criteria": "Screenshots highlighting the control have been implemented",
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-05",
-      "agent_decision": "SUFFICIENT",
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence that BitLocker protection is 'On' for the encrypted volume, as 'Protection Status: Protection Off' indicates the encryption is not actively protecting the device.",
+      "agent_decision": "INSUFFICIENT",
       "relevance_score": 95,
-      "mapping_score": 95,
-      "sufficiency_score": 95,
+      "mapping_score": 40,
+      "sufficiency_score": 40,
       "overall_confidence": "HIGH",
-      "agent_reasoning": "The PowerShell output clearly shows BitLocker protection is 'On' and the C: drive is 100% encrypted with XTS-AES 128, directly addressing the previous remediation gap where protection was off.",
-      "missing": null,
+      "agent_reasoning": "The evidence shows the C: drive is 100% encrypted but BitLocker protection is off, meaning the device is not actively protected by encryption.",
+      "missing": "Evidence that BitLocker protection is 'On' for the encrypted volume, as 'Protection Status: Protection Off' indicates the encryption is not actively protecting the device.",
       "audit_trail": [
         {
           "timestamp": "2026-03-05T00:33:03.583Z",
@@ -146,6 +146,21 @@
           "timestamp": "2026-03-05T02:47:02.435Z",
           "actor": "agent",
           "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-05T02:48:07.449Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-05T02:48:09.229Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that BitLocker protection is 'On' for the encrypted volume, as 'Protection Status: Protection Off' indicates the encryption is not actively protecting the device.. Scores: R=95, M=40, S=40"
+        },
+        {
+          "timestamp": "2026-03-05T02:48:09.370Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
       ]
     }
