@@ -10,16 +10,16 @@
       "date_opened": "2026-03-06",
       "sla_deadline": "2026-03-20",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": null,
+      "last_evaluated_message_id": "19cc4c7e7d218053",
       "remediation_email_sent": true,
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-06",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence showing BitLocker 'Protection Status' as 'On' for the production server's C: drive.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 95,
+      "mapping_score": 40,
+      "sufficiency_score": 40,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The evidence shows BitLocker is 100% encrypted but the 'Protection Status' is 'Protection Off', meaning the encryption is not actively protecting the drive.",
+      "missing": "Evidence showing BitLocker 'Protection Status' as 'On' for the production server's C: drive.",
       "audit_trail": [
         {
           "timestamp": "2026-03-06T20:10:31.968Z",
@@ -30,6 +30,21 @@
           "timestamp": "2026-03-06T20:10:58.073Z",
           "actor": "agent",
           "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-06T20:12:44.484Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-06T20:12:46.429Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence showing BitLocker 'Protection Status' as 'On' for the production server's C: drive.. Scores: R=95, M=40, S=40"
+        },
+        {
+          "timestamp": "2026-03-06T20:12:46.772Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
       ]
     }
