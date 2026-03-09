@@ -9,22 +9,42 @@
       "severity": "High",
       "date_opened": "2026-03-09",
       "sla_deadline": "2026-03-23",
-      "status": "Open",
-      "last_evaluated_message_id": null,
-      "remediation_email_sent": false,
-      "agent_last_action": "Issue created. Pending next agent cycle.",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "status": "Awaiting Evidence",
+      "last_evaluated_message_id": "19cd49ef40f8ae4d",
+      "remediation_email_sent": true,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence for Volume D and any other in-scope endpoints, as the previous submission was insufficient for Volume D and the current submission only addresses Volume C.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 95,
+      "mapping_score": 75,
+      "sufficiency_score": 40,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided an email and a screenshot showing BitLocker enabled for Volume C, but explicitly failed to provide evidence for Volume D and other in-scope endpoints as requested in the automated email.",
+      "missing": "Evidence for Volume D and any other in-scope endpoints, as the previous submission was insufficient for Volume D and the current submission only addresses Volume C.",
       "audit_trail": [
         {
           "timestamp": "2026-03-09T22:11:06.399Z",
           "actor": "analyst",
           "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        },
+        {
+          "timestamp": "2026-03-09T22:11:18.770Z",
+          "actor": "agent",
+          "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-09T22:11:18.899Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-09T22:11:20.220Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence for Volume D and any other in-scope endpoints, as the previous submission was insufficient for Volume D and the current submission only addresses Volume C.. Scores: R=95, M=75, S=40"
+        },
+        {
+          "timestamp": "2026-03-09T22:11:20.384Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
       ]
     }
