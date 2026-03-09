@@ -10,12 +10,12 @@
       "date_opened": "2026-03-09",
       "sla_deadline": "2026-03-23",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": "19cd4866039571de",
+      "last_evaluated_message_id": "19cd488928af6f33",
       "remediation_email_sent": true,
       "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Confirmation that the server shown is the specific production server identified in the issue, and evidence that all production volumes on that server (not just the C: drive) are encrypted.",
       "agent_decision": "INSUFFICIENT",
-      "relevance_score": 95,
-      "mapping_score": 75,
+      "relevance_score": 75,
+      "mapping_score": 60,
       "sufficiency_score": 40,
       "overall_confidence": "HIGH",
       "agent_reasoning": "The vendor provided a screenshot showing BitLocker enabled on the C: drive, but it does not confirm this is the specific production server in scope, nor does it confirm all other production volumes are encrypted.",
@@ -58,6 +58,21 @@
         },
         {
           "timestamp": "2026-03-09T21:35:11.749Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
+        },
+        {
+          "timestamp": "2026-03-09T21:37:30.316Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-09T21:37:32.437Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Confirmation that the server shown is the specific production server identified in the issue, and evidence that all production volumes on that server (not just the C: drive) are encrypted.. Scores: R=75, M=60, S=40"
+        },
+        {
+          "timestamp": "2026-03-09T21:37:32.591Z",
           "actor": "agent",
           "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
