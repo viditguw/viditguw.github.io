@@ -10,16 +10,16 @@
       "date_opened": "2026-03-09",
       "sla_deadline": "2026-03-23",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": null,
+      "last_evaluated_message_id": "19cd4a9952ad663d",
       "remediation_email_sent": true,
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-09",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence that BitLocker or any other encryption method is actively enabled and encrypting the endpoint's storage at rest.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 95,
+      "mapping_score": 10,
+      "sufficiency_score": 10,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided a PowerShell screenshot showing BitLocker is installed, but the output explicitly states 'Protection Status: Protection Off' and 'Percentage Encrypted: 0.0%', indicating the endpoint is NOT encrypted.",
+      "missing": "Evidence that BitLocker or any other encryption method is actively enabled and encrypting the endpoint's storage at rest.",
       "audit_trail": [
         {
           "timestamp": "2026-03-09T22:12:38.307Z",
@@ -30,6 +30,21 @@
           "timestamp": "2026-03-09T22:12:44.678Z",
           "actor": "agent",
           "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-09T22:13:33.083Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-09T22:13:35.780Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that BitLocker or any other encryption method is actively enabled and encrypting the endpoint's storage at rest.. Scores: R=95, M=10, S=10"
+        },
+        {
+          "timestamp": "2026-03-09T22:13:35.923Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
       ]
     }
