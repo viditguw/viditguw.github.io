@@ -10,16 +10,16 @@
       "date_opened": "2026-03-09",
       "sla_deadline": "2026-03-23",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": null,
+      "last_evaluated_message_id": "19cd49cc0d8f3d1a",
       "remediation_email_sent": true,
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-09",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence that the endpoint is encrypted at rest; the provided evidence explicitly shows it is not encrypted.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 95,
+      "mapping_score": 0,
+      "sufficiency_score": 0,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided a screenshot of a command prompt showing 'manage-bde -status' for Volume D, which explicitly states 'Percentage Encrypted: 0.0%' and 'Protection Status: Protection Off', directly contradicting the control requirement.",
+      "missing": "Evidence that the endpoint is encrypted at rest; the provided evidence explicitly shows it is not encrypted.",
       "audit_trail": [
         {
           "timestamp": "2026-03-09T21:58:53.979Z",
@@ -30,6 +30,21 @@
           "timestamp": "2026-03-09T21:59:01.060Z",
           "actor": "agent",
           "action": "Remediation request email sent to viditg@uw.edu"
+        },
+        {
+          "timestamp": "2026-03-09T21:59:31.428Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-09T21:59:33.271Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence that the endpoint is encrypted at rest; the provided evidence explicitly shows it is not encrypted.. Scores: R=95, M=0, S=0"
+        },
+        {
+          "timestamp": "2026-03-09T21:59:33.460Z",
+          "actor": "agent",
+          "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
       ]
     }
