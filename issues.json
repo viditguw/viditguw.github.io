@@ -10,16 +10,16 @@
       "date_opened": "2026-03-09",
       "sla_deadline": "2026-03-23",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": null,
+      "last_evaluated_message_id": "19cd0accc3959997",
       "remediation_email_sent": true,
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-09",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: System-generated evidence (e.g., screenshots, configuration exports, or reports) demonstrating that production data is encrypted at rest, specifically showing the encryption status of relevant S3 buckets, RDS instances, Azure Blobs/SQL, GCP storage, or on-premises volumes.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 0,
+      "mapping_score": 0,
+      "sufficiency_score": 0,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided a document about an MBA capstone project on AI business solutions, which is completely unrelated to the issue of production data encryption.",
+      "missing": "System-generated evidence (e.g., screenshots, configuration exports, or reports) demonstrating that production data is encrypted at rest, specifically showing the encryption status of relevant S3 buckets, RDS instances, Azure Blobs/SQL, GCP storage, or on-premises volumes.",
       "audit_trail": [
         {
           "timestamp": "2026-03-09T03:37:29.820Z",
@@ -30,6 +30,21 @@
           "timestamp": "2026-03-09T03:37:36.056Z",
           "actor": "agent",
           "action": "Remediation request email sent to aarushisingla21@gmail.com"
+        },
+        {
+          "timestamp": "2026-03-09T03:38:37.886Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Aarushi singla <aarushisingla21@gmail.com>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-09T03:38:42.075Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: System-generated evidence (e.g., screenshots, configuration exports, or reports) demonstrating that production data is encrypted at rest, specifically showing the encryption status of relevant S3 buckets, RDS instances, Azure Blobs/SQL, GCP storage, or on-premises volumes.. Scores: R=0, M=0, S=0"
+        },
+        {
+          "timestamp": "2026-03-09T03:38:42.271Z",
+          "actor": "agent",
+          "action": "Re-request email sent to aarushisingla21@gmail.com. Awaiting revised evidence."
         }
       ]
     }
