@@ -18,7 +18,7 @@
       "mapping_score": 90,
       "sufficiency_score": 90,
       "overall_confidence": "HIGH",
-      "agent_reasoning": "The vendor provided a PowerShell screenshot showing BitLocker is fully enabled and encrypted on the C: drive, directly addressing the control requirement for encryption at rest.",
+      "agent_reasoning": "The vendor provided a screenshot of PowerShell output showing BitLocker is fully enabled and encrypted on the C: drive, directly addressing the control requirement.",
       "missing": null,
       "audit_trail": [
         {
@@ -47,17 +47,17 @@
           "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         },
         {
-          "timestamp": "2026-03-10T17:19:20.155Z",
+          "timestamp": "2026-03-10T17:19:23.858Z",
           "actor": "agent",
           "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
         },
         {
-          "timestamp": "2026-03-10T17:19:22.237Z",
+          "timestamp": "2026-03-10T17:19:27.134Z",
           "actor": "agent",
           "action": "Gemini evaluation complete. Decision: SUFFICIENT. Issue closed. Scores: R=95, M=90, S=90"
         },
         {
-          "timestamp": "2026-03-10T17:19:22.381Z",
+          "timestamp": "2026-03-10T17:19:27.260Z",
           "actor": "agent",
           "action": "Closure notification email sent to viditg@uw.edu"
         }
