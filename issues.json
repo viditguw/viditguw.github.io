@@ -1,3 +1,32 @@
 {
-  "issues": []
+  "issues": [
+    {
+      "issue_id": "ISS-001",
+      "vendor_name": "Honor",
+      "vendor_email": "viditg@uw.edu",
+      "control_id": "ENC-002",
+      "issue_description": "Your endpoint does not encrypt data at rest!",
+      "severity": "High",
+      "date_opened": "2026-03-10",
+      "sla_deadline": "2026-03-24",
+      "status": "Open",
+      "last_evaluated_message_id": null,
+      "remediation_email_sent": false,
+      "agent_last_action": "Issue created. Pending next agent cycle.",
+      "agent_decision": null,
+      "relevance_score": null,
+      "mapping_score": null,
+      "sufficiency_score": null,
+      "overall_confidence": null,
+      "agent_reasoning": null,
+      "missing": null,
+      "audit_trail": [
+        {
+          "timestamp": "2026-03-10T00:44:24.816Z",
+          "actor": "analyst",
+          "action": "Issue created via dashboard. Agent will send remediation email on next cycle."
+        }
+      ]
+    }
+  ]
 }
