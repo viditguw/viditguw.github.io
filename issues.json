@@ -12,14 +12,14 @@
       "status": "Awaiting Evidence",
       "last_evaluated_message_id": "19cd8c17e4edee2d",
       "remediation_email_sent": true,
-      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's data at rest.",
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's storage volumes.",
       "agent_decision": "INSUFFICIENT",
       "relevance_score": 95,
       "mapping_score": 0,
       "sufficiency_score": 0,
       "overall_confidence": "HIGH",
       "agent_reasoning": "The vendor provided a screenshot of a PowerShell command showing BitLocker is not enabled on the C: drive, directly contradicting the control requirement for encryption at rest.",
-      "missing": "Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's data at rest.",
+      "missing": "Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's storage volumes.",
       "audit_trail": [
         {
           "timestamp": "2026-03-10T17:16:57.067Z",
@@ -32,17 +32,17 @@
           "action": "Remediation request email sent to viditg@uw.edu"
         },
         {
-          "timestamp": "2026-03-10T17:18:09.270Z",
+          "timestamp": "2026-03-10T17:18:13.869Z",
           "actor": "agent",
           "action": "Vendor reply received from Vidit Gupta <viditg@uw.edu>. Evidence extracted."
         },
         {
-          "timestamp": "2026-03-10T17:18:12.081Z",
+          "timestamp": "2026-03-10T17:18:17.652Z",
           "actor": "agent",
-          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's data at rest.. Scores: R=95, M=0, S=0"
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: Evidence showing BitLocker or another form of encryption is actively enabled and fully encrypted on the endpoint's storage volumes.. Scores: R=95, M=0, S=0"
         },
         {
-          "timestamp": "2026-03-10T17:18:12.220Z",
+          "timestamp": "2026-03-10T17:18:17.814Z",
           "actor": "agent",
           "action": "Re-request email sent to viditg@uw.edu. Awaiting revised evidence."
         }
