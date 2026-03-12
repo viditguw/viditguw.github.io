@@ -9,7 +9,7 @@
       "severity": "High",
       "date_opened": "2026-03-12",
       "sla_deadline": "2026-03-26",
-      "status": "Awaiting Evidence",
+      "status": "Closed",
       "last_evaluated_message_id": "19ce3575af0ebdc1",
       "remediation_email_sent": true,
       "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: System-generated evidence (screenshots, configuration exports, or reports) demonstrating that encryption is correctly implemented on all in-scope storage resources.",
@@ -45,6 +45,11 @@
           "timestamp": "2026-03-12T18:38:04.626Z",
           "actor": "agent",
           "action": "Re-request email sent to aarushisingla21@gmail.com. Awaiting revised evidence."
+        },
+        {
+          "timestamp": "2026-03-12T18:39:55.083Z",
+          "actor": "analyst",
+          "action": "Issue manually closed by analyst override."
         }
       ]
     },
