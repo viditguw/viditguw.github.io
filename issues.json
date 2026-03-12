@@ -10,16 +10,16 @@
       "date_opened": "2026-03-12",
       "sla_deadline": "2026-03-26",
       "status": "Awaiting Evidence",
-      "last_evaluated_message_id": null,
+      "last_evaluated_message_id": "19ce3575af0ebdc1",
       "remediation_email_sent": true,
-      "agent_last_action": "Remediation request email sent to vendor on 2026-03-12",
-      "agent_decision": null,
-      "relevance_score": null,
-      "mapping_score": null,
-      "sufficiency_score": null,
-      "overall_confidence": null,
-      "agent_reasoning": null,
-      "missing": null,
+      "agent_last_action": "Evidence insufficient. Re-request email sent. Missing: System-generated evidence (screenshots, configuration exports, or reports) demonstrating that encryption is correctly implemented on all in-scope storage resources.",
+      "agent_decision": "INSUFFICIENT",
+      "relevance_score": 0,
+      "mapping_score": 0,
+      "sufficiency_score": 0,
+      "overall_confidence": "HIGH",
+      "agent_reasoning": "The vendor provided only a 'Fixed!' response to the email without any attached evidence, making it impossible to verify remediation.",
+      "missing": "System-generated evidence (screenshots, configuration exports, or reports) demonstrating that encryption is correctly implemented on all in-scope storage resources.",
       "audit_trail": [
         {
           "timestamp": "2026-03-12T18:37:16.610Z",
@@ -30,6 +30,21 @@
           "timestamp": "2026-03-12T18:37:29.925Z",
           "actor": "agent",
           "action": "Remediation request email sent to aarushisingla21@gmail.com"
+        },
+        {
+          "timestamp": "2026-03-12T18:38:03.042Z",
+          "actor": "agent",
+          "action": "Vendor reply received from Aarushi singla <aarushisingla21@gmail.com>. Evidence extracted."
+        },
+        {
+          "timestamp": "2026-03-12T18:38:04.475Z",
+          "actor": "agent",
+          "action": "Gemini evaluation complete. Decision: INSUFFICIENT. Missing: System-generated evidence (screenshots, configuration exports, or reports) demonstrating that encryption is correctly implemented on all in-scope storage resources.. Scores: R=0, M=0, S=0"
+        },
+        {
+          "timestamp": "2026-03-12T18:38:04.626Z",
+          "actor": "agent",
+          "action": "Re-request email sent to aarushisingla21@gmail.com. Awaiting revised evidence."
         }
       ]
     },
